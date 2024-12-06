@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        img {
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <img id="dvd" src="https://images.vexels.com/content/143390/preview/dvd-logo-blue-b0b340.png">
+
+</body>
+
+</html>
+<script>
+    var X = 100
+    var positionY = 50
+    var speedX = +5
+    var speedY = +3
+    document.getElementById("dvd").addEventListener("click", moveBox)
+    function moveBox() {
+        //increase box position
+        document.getElementById("dvd").style.left = X + "px"
+        document.getElementById("dvd").style.top = positionY + "px"
+        X = X + speedX
+        //change direction
+        if (X >= 500) {
+            speedX = -5
+        }
+        if (X <= 50) {
+            speedX = +5
+        }
+        positionY = positionY + speedY
+        if (positionY >= 500) {
+            speedY = -3
+        }
+        if (positionY <= 50) {
+            speedY = +3
+        }
+    }
+    function speedIncrease() {
+        //If box is clicked speed increases
+
+        if (speedX >= 0) {
+            speedX = speedX + 5
+        }
+        if (speedX <= 0) {
+            speedX = speedX - 5
+        }
+    }
+    document.getElementById("dvd").addEventListener("click", speedIncrease)
+    setInterval(moveBox, 20)
+
+
+</script>
