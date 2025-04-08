@@ -20,8 +20,7 @@
 
   <button id="score2" type="button">UPGRADE </button>
 
-  }
-  <p> <button id="score3" type="button">UPGRADE2 </button></p>
+  <p><button id="score3" type="button">UPGRADE2 </button></p>
 
 
 </body>
@@ -40,20 +39,29 @@
   }
   var score = 0
   function down() {
-    score = score - 1
+    score = score + 1
     console.log(score)
   }
+
+  
+
   document.getElementById("score2").addEventListener("click", upgrade)
   function upgrade() {
-    if (score >= 100) {
-      scorePerClick = scorePerClick + 49
-      score=score-100
+    if (score >= 50) {
+      scorePerClick = scorePerClick + 4
+      score = score - 50
+      document.getElementById("score").innerHTML = "cat = " + score
     }
-
-
   }
-  
+  document.getElementById("score3").addEventListener("click", upgrade2)
+  function upgrade2() {
+    if (score >= 100) {
+      scorePerClick = scorePerClick + 5
+      score = score - 100
+      document.getElementById("score").innerHTML = "cat = " + score
+    }
+  }
+</script>
   
 
-  // if button is pressed remove 100 score 
-</script>
+

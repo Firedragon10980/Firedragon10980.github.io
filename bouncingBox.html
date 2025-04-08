@@ -6,61 +6,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%; /* Increased height */
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars */
+            background-color: black; /* Set background to black */
+        }
+    
+       
         img {
-            width: 70px;
-            height: 70px;
+            width: 200px;
+            height: 200px;
             position: absolute;
-            top: 100px;
-            left: 100px;
-
         }
     </style>
 </head>
 
 <body>
-    <img id="dvd" src="https://images.vexels.com/content/143390/preview/dvd-logo-blue-b0b340.png">
-
+    <div id="container"></div>
 </body>
 
 </html>
 <script>
-    var X = 100
-    var positionY = 50
-    var speedX = +5
-    var speedY = +3
-    document.getElementById("dvd").addEventListener("click", moveBox)
+    var X = [50, 100, 150, 200, 250]; // Initial X positions for 5 boxes
+    var positionY = [50, 100, 150, 200, 250]; // Initial Y positions for 5 boxes
+    var speedX = [2, 3, 4, 5, 6]; // Initial X speeds for 5 boxes
+    var speedY = [2, 3, 4, 5, 6]; // Initial Y speeds for 5 boxes
+    var container = document.getElementById("container");
+    var boxes = [];
+    var imgWidth = 200, imgHeight = 200;
+
+    // Create 5 boxes dynamically
+    for (var i = 0; i < 5; i++) {
+        var img = document.createElement("img");
+        img.src = "https://images.vexels.com/content/143390/preview/dvd-logo-blue-b0b340.png";
+        img.style.width = imgWidth + "px";
+        img.style.height = imgHeight + "px";
+        img.style.position = "absolute";
+        img.style.left = X[i] + "px";
+        img.style.top = positionY[i] + "px";
+        img.addEventListener("click", speedIncrease.bind(null, i));
+        container.appendChild(img);
+        boxes.push(img);
+    }
+
     function moveBox() {
-        //increase box position
-        document.getElementById("dvd").style.left = X + "px"
-        document.getElementById("dvd").style.top = positionY + "px"
-        X = X + speedX
-        //change direction
-        if (X >= 500) {
-            speedX = -5
-        }
-        if (X <= 50) {
-            speedX = +5
-        }
-        positionY = positionY + speedY
-        if (positionY >= 500) {
-            speedY = -3
-        }
-        if (positionY <= 50) {
-            speedY = +3
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+
+        for (var i = 0; i < 5; i++) {
+            // Update box position
+            boxes[i].style.left = X[i] + "px";
+            boxes[i].style.top = positionY[i] + "px";
+            X[i] = X[i] + speedX[i];
+
+            // Change direction based on window size
+            if (X[i] + imgWidth >= windowWidth || X[i] <= 0) {
+                speedX[i] = -speedX[i];
+            }
+            positionY[i] = positionY[i] + speedY[i];
+            if (positionY[i] + imgHeight >= windowHeight || positionY[i] <= 0) {
+                speedY[i] = -speedY[i];
+            }
         }
     }
+
+    function speedIncrease(index) {
+        // If box is clicked, speed increases
+        if (speedX[index] >= 0) {
+            speedX[index] = speedX[index] + 5;
+        } else {
+            speedX[index] = speedX[index] - 5;
+        }
+        if (speedY[index] >= 0) {
+            speedY[index] = speedY[index] + 3;
+        } else {
+            speedY[index] = speedY[index] - 3;
+        }
+    }
+
+    setInterval(moveBox, 20);
+
     function speedIncrease() {
-        //If box is clicked speed increases
-
-        if (speedX >= 0) {
-            speedX = speedX + 5
-        }
-        if (speedX <= 0) {
-            speedX = speedX - 5
+        for (var i = 0; i < 5; i++) {
+            // If box is clicked, speed increases
+            if (speedX[i] >= 0) {
+                speedX[i] = speedX[i] + 5;
+            } else {
+                speedX[i] = speedX[i] - 5;
+            }
+            if (speedY[i] >= 0) {
+                speedY[i] = speedY[i] + 3;
+            } else {
+                speedY[i] = speedY[i] - 3;
+            }
         }
     }
-    document.getElementById("dvd").addEventListener("click", speedIncrease)
-    setInterval(moveBox, 20)
 
+    img.onload = function () {
+        imgWidth = img.offsetWidth;
+        imgHeight = img.offsetHeight;
 
+        img.addEventListener("click", speedIncrease);
+
+        setInterval(moveBox, 20);
+    };
+    
 </script>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title></title>
+</head>
+<body>
+    <canvas id="canvas" height="800" width="1700"> </canvas>
+</body>
+<script>
+    var positionX = [];
+    var positionY = [];
+    var radius = [];
+    var c = document.getElementById("canvas");
+    var colors = [];
+    var ctx = c.getContext("2d");
+    var directionX = [];
+    var directionY = [];
+    setInterval(main, 50);
+
+    function main() {
+        ctx.clearRect(0, 0, 1700, 800); // Clear the canvas
+        for (var i = 0; i < 1000; i++) {
+            positionX[i] = positionX[i] + directionX[i];
+            positionX[i] = positionX[i] + directionX[i]
+            ctx.beginPath();
+            ctx.arc(positionX[i], positionY[i], radius[i],0,7)
+            ctx.fillStyle = colors[i];
+            ctx.fill(); 
+            // Draw the circle
+            positionY[i] += directionY[i]
+            if (positionX[i] + radius[i] >= 1300 || positionX[i] <= 0) { 
+                // Reverse direction if hitting canvas edges
+                directionX[i] = -directionX[i];
+            }
+            if (positionY[i] + radius[i] >= 650 || positionY[i] <= 0) { 
+                // Reverse direction if hitting canvas edges
+                directionY[i] = -directionY[i];
+            }
+        }
+    }
+
+    for (var i = 0; i < 1000; i++) {
+        positionX.push(Math.random() * 400)
+        positionY.push(Math.random() * 300)
+        radius.push(Math.random() * 20) //picks a random value from 0 to 50 for each circle
+        //variable.push with math random pushes them into the arrays with random values
+        directionX.push(Math.random() * 5)  //speed 1-10
+        directionY.push(Math.random() * 5)
+        colors.push(`rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`);
+}
+// this pushes into the array variable stuff so that it can be used in the main function and
+//  spawn more circles
+    
+    // || symbol means if either is true then itll happen and stuff
+   
+
+</script>
+
+</html>
