@@ -35,19 +35,46 @@ $(document).ready(function () {
   /////////////////////////////////////////////////
 
   // TODO 1: create a new shape object and add it to the array
-  
+  let shape = {
+    color: "blue",
+    shape: "circle",
+    repeat: 3
+  }
+  dataShapes.push(shape)
 
   // TODO 2: add a new property to all data shapes
-  
+  for (let i = 0; i < dataShapes.length; i++) {
+    let currentShape = dataShapes[i]
+
+    if (currentShape.color === "red") {
+      currentShape.goodBehavior = "bounce"
+    }
+    else if (currentShape.color === "blue") {
+      currentShape.goodBehavior = "blink"
+    } else {
+      currentShape.goodBehavior = "spin"
+    }
+
+  }
 
   // TODO 3-a: add a function that handles the static display type
-  
+  function handleStatic(data) {
+    setBackgroundWithObject(data)
+    animationDetails.displayType = 1
+  }
 
   // TODO 4-a: add a function that handles the good display type
-  
+function handleGood(data) {
+  setBackgroundWithSimple(data.color,data.shape,data.repeat)
+animationDetails.displayType = 2
+}
 
   // TODO 5-a: add a function that handles the bad display type
-  
+function handlebad(data,repeat){
+repeat + 1
+setBackgroundWithMixed(data,repeat)
+animationDetails.displayType = 3
+}
 
   /////////////////////////////////////////////////
   // BUTTON HANDLERS BELOW HERE (3-b, 4-b, 5-b) ///
@@ -55,17 +82,22 @@ $(document).ready(function () {
 
   function staticDisplay() {
     // TODO 3-b: call your handleStatic function
-    
+    handleStatic(dataShapes[currentIndex])
+
+
   }
 
   function goodDisplay() {
     // TODO 4-b: call your handleGood function
-    
+let currentShape = dataShapes[currentIndex]
+handleGood(currentShape)
   }
 
   function badDisplay() {
     // TODO 5-b: call your handleBad function
-    
+let currentShape = dataShapes[currentIndex]
+let repeat = currentShape.repeat
+handlebad(currentShape,repeat)
   }
 
   /////////////////////////////////////////////////
@@ -209,14 +241,14 @@ $(document).ready(function () {
     animationDetails.y += animationDetails.speedY;
     if (
       animationDetails.x + $("#shape").width() + 8 >=
-        $("#shape-container").width() ||
+      $("#shape-container").width() ||
       animationDetails.x < 2
     ) {
       animationDetails.speedX *= -1;
     }
     if (
       animationDetails.y + $("#shape").height() + 4 >=
-        $("#shape-container").height() ||
+      $("#shape-container").height() ||
       animationDetails.y < 2
     ) {
       animationDetails.speedY *= -1;
